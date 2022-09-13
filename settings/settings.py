@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'product',
     'accounts',
     'crispy_forms',
+    'phone_field',
+    
 ]
 
 MIDDLEWARE = [
@@ -130,6 +132,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+PHONENUMBER_DEFAULT_REGION = 'AZ'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -150,14 +154,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 DEFAULT_FROM_EMAIL = 'idris.ceferov244@gmail.com'
 SERVER_EMAIL = 'idris.ceferov244@gmail.com'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
-EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'idris.ceferov244@gmail.com'
-EMAIL_HOST_PASSWORD = '2442264c'
+EMAIL_HOST_PASSWORD = 'zqhpphovztrssbyp'
 EMAIL_PORT = 465

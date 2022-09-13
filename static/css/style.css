@@ -14262,6 +14262,9 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .ps-store-list .ps-section__search .form-group {
   position: relative;
 }
+.row .col-sm-6:nth-of-type(5) .form-control{
+  padding: 10px 20px;
+}
 
 .ps-store-list .ps-section__search .form-group button {
   position: absolute;

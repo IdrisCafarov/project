@@ -65,11 +65,10 @@ class BuyerRegisterForm(UserCreationForm):
 
 class SellerRegisterForm(UserCreationForm):
 
-    # company_name=forms.CharField(max_length=1200,widget=forms.TextInput(attrs={
-    # 	'class':'form-control',
-    # 	'placeholder':'Ad',
-    #     # 'autofocus': '',
-    # 	}))
+    company_name=forms.CharField(max_length=1200,widget=forms.TextInput(attrs={
+    	'class':'form-control',
+    	'placeholder':'Ad',
+    	}))
     
     email = forms.EmailField(max_length=100,widget=forms.EmailInput(attrs={
         'class':'form-control ',
@@ -79,29 +78,28 @@ class SellerRegisterForm(UserCreationForm):
     first_name=forms.CharField(max_length=1200,widget=forms.TextInput(attrs={
     	'class':'form-control',
     	'placeholder':'Ad',
-        'autofocus': '',
     	}))
     last_name=forms.CharField(max_length=1200,widget=forms.TextInput(attrs={
         'class':'form-control',
         'placeholder':'Soyad'
         }))
-    password1=forms.CharField(max_length=100,widget=forms.PasswordInput(
-        attrs={
-        'class':'form-control',
-        'placeholder':'Şifrə'
-        }
-    ))
-    password2=forms.CharField(max_length=100,widget=forms.PasswordInput(
-        attrs={
-        'class':'form-control',
-        'placeholder':'Şifrəni doğrula'
-        }
-    ))
+    # password1=forms.CharField(max_length=100,widget=forms.PasswordInput(
+    #     attrs={
+    #     'class':'form-control',
+    #     'placeholder':'Şifrə'
+    #     }
+    # ))
+    # password2=forms.CharField(max_length=100,widget=forms.PasswordInput(
+    #     attrs={
+    #     'class':'form-control',
+    #     'placeholder':'Şifrəni doğrula'
+    #     }
+    # ))
 
 
     class Meta:
         model = User
-        fields = ('first_name','last_name','email' ,'password1', 'password2')
+        fields = ('company_name','first_name','last_name','email')
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

@@ -600,10 +600,24 @@
         </div>
         <div class="ps-my-account">
             <div class="container">
+                
                 <form class="ps-form--account ps-tab-root" action="" method="post">
                     {% csrf_token %}
                     <ul class="ps-tab-list">
                         <li class="active"><a href="#sign-in">Login</a></li>
+                            {% comment %} <div style="text-align: center !important;" class="col-md-6">
+                    
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if message.tags == "success" %}
+                                            <div class="alert alert-success" role="alert">
+                                                {{ message }}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                    
+                                {% endif %}
+                            </div> {% endcomment %}
                     </ul>
                     <div class="ps-tabs">
                         <div class="ps-tab active" id="sign-in">
