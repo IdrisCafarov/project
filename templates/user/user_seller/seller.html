@@ -1,0 +1,186 @@
+ {% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+     <div class="ps-page--single">
+        <div class="ps-breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Pages</a></li>
+                    <li><a href="vendor-store.html">Vendor Pages</a></li>
+                    <li>Vendor Dashboard Free</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  <div class="ps-vendor-dashboard">
+        <div class="container">
+            <div class="ps-section__header">
+                <h3>Dasboard</h3>
+               
+            </div>
+          
+        </div>
+    </div> 
+    
+    <div class="free_bigdiv">
+       <div class="free_middiv">
+         <div class="free_div1">
+            
+            <ul class="dasbord_ul">
+            
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Dashboard</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_product' request.user.id %}">Products</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_order' request.user.id %}">Order</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Withdrafts</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Settings</a></p></li>
+            </ul>
+            <ul class="dasbord_ul1">
+                <li><i class="fas fa-external-link-alt"></i></li>
+                <li><i class="fas fa-external-link-alt"></i></li>
+                <li><i class="fas fa-external-link-alt"></i></li>
+            </ul>
+           
+         </div>
+         <div class="free_div2">
+            <div class="free_error">
+                <p><b>Error!</b> Your account is not enabled for selling, please contact the admin</p>
+            </div>
+            <div class="free_sales_order">
+                <div class="free_sales1">
+                    <div class="free_order1">
+                        <div class="free_order_main1 ">
+                           
+                              <span>Sales</span>
+                                <b>$0.00</b>
+                          
+                        </div>
+                        <div class="free_order_main1">
+                            <span>Earning</span>
+                            <b>$0.00</b>
+                        </div>
+                        <div class="free_order_main1">
+                            <span>Pegeview</span>
+                                <b>$0.00</b>
+                        </div>
+                        <div class="free_order_main1">
+                            <span>Order</span>
+                                <b>$0.00</b>
+                        </div>
+                    </div>
+                    <div class="free_order2">
+                        <div class="free_order_main2">
+                            <p><i class="fas fa-shopping-cart"></i>
+                                Orders
+                            </p>
+                        </div>
+                        <div class="free_order_main_total">
+
+                            <div class="free_order_main ">
+                                <a href="#">
+                                <span>Total</span> </a>
+                                <p >0</p>
+                               
+                            </div>
+                            <div class="free_order_main text-muted">
+                                <a href="#">
+                                <span>Completed</span>
+                                </a>
+                                <p class="text-muted">0</p>
+                            </div>
+                            <div class="free_order_main text-primary">
+                                <a href="#">
+                                <span>Pending</span>
+                                </a>
+                                <p class="text-primary">0</p>
+                            </div>
+                            <div class="free_order_main text-success">
+                                <a href="#">
+                                <span>Rocessing</span>
+                                </a>
+                                <p class="text-success">0</p>
+                            </div>
+                            <div class="free_order_main text-secondary">
+                                <a href="#">
+                                <span>Cancelled</span>
+                                </a>
+                                <p class="text-secondary">0</p>
+                            </div>
+                            <div class="free_order_main text-warning">
+                                <a href="#">
+                                <span>Refunded</span></a>
+                                <p class="text-warning">0</p>
+                            </div>
+                            <div class="free_order_main text-danger">
+                                <a href="#">
+                                <span>On hold</span>
+                                </a>
+                                <p class="text-danger">0</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="free_order3">
+                        <div class="free_order_main3">
+                            <p><i class="fas fa-shopping-cart"></i>
+                                Orders
+                            </p>
+                            <span><a href="#">+Add new product</a></span>
+                        </div>
+                        <div class="free_order_main_total">
+                            <div class="free_order_main_total1">
+                                 <a href="#">
+                                    <span>Total</span>
+                                 </a>
+                                 <p>0</p>
+                            </div>
+                            <div class="free_order_main_total1">
+                                <a href="#">
+                                   <span>Live</span>
+                                </a>
+                                <p>0</p>
+                           </div>
+                           <div class="free_order_main_total1">
+                            <a href="#">
+                               <span>Offline</span>
+                            </a>
+                            <p>0</p>
+                       </div>
+                           <div class="free_order_main_total1">
+                            <a href="#">
+                               <span>Pending Review</span>
+                            </a>
+                            <p>0</p>
+                       </div>
+                        </div>
+                     
+                    </div>
+
+                </div>
+                <div class="free_sales2">
+                    <div class="free_order4">
+                        <div class="free_order_main2">
+                            <p><i class="fas fa-shopping-cart"></i>
+                                Sales this Month
+                            </p>
+                        </div>
+                        <div class="">
+
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+         </div>
+         
+       </div>
+    </div>
+    {% endblock body %} 
+
+
+
+
+    

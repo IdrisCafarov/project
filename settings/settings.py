@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'accounts',
     'crispy_forms',
     'phone_field',
+    'users',
+    'rest_framework',
     
 ]
 

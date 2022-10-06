@@ -1,12 +1,12 @@
 from django.contrib import admin
-from product.models import Product,MainCategory,SubCategory,AdsSettings
+from product.models import Product,MainCategory,SubCategory,AdsSettings,Brand
 
 MAX_OBJECTS=1
 
 # Register your models here.
 @admin.register(Product)
 class AdminProduct(admin.ModelAdmin):
-    list_display = ['name','slug','created_date','updated_date']
+    list_display = ['name','slug','created_date','updated_date','seller']
 
 @admin.register(MainCategory)
 class AdminMainCategory(admin.ModelAdmin):
@@ -25,3 +25,6 @@ class AdminAdsSettings(admin.ModelAdmin):
           if self.model.objects.count() >= MAX_OBJECTS:
                return False
           return super().has_add_permission(request)
+
+
+admin.site.register(Brand)

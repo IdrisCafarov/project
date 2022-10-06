@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+     <div class="ps-page--single">
+        <div class="ps-breadcrumb">
+            <div class="container">
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Pages</a></li>
+                    <li><a href="vendor-store.html">Vendor Pages</a></li>
+                    <li>Vendor Dashboard Free</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  <div class="ps-vendor-dashboard">
+        <div class="container">
+            <div class="ps-section__header">
+                <h3>Dasboard</h3>
+               
+            </div>
+          
+        </div>
+    </div> 
+    
+    <div class="free_bigdiv">
+       <div class="free_middiv">
+         <div class="free_div1">
+            
+            <ul class="dasbord_ul">
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_dashboard' request.user.id %}">Dashboard</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_product' request.user.id %}">Products</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_order' request.user.id %}">Order</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Withdrafts</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Settings</a></p></li>
+            </ul>
+            <ul class="dasbord_ul1">
+                <li><i class="fas fa-external-link-alt"></i></li>
+                <li><i class="fas fa-external-link-alt"></i></li>
+                <li><i class="fas fa-external-link-alt"></i></li>
+            </ul>
+           
+         </div>
+         <div class="free_div2">
+            <div class="free_error">
+                <p><b>Error!</b> Your account is not enabled for selling, please contact the admin</p>
+            </div>
+            <div class="free_orders">
+              <ul>
+                <li><a href="#">All(0) |</a></li>
+                 <li><a href="#">Completed(0) |</a></li>
+                 <li><a href="#">Processing(0) |</a></li>
+                 <li><a href="#">On-hold(0) |</a></li>
+                 <li><a href="#">Pending(0) |</a></li>
+                 <li><a href="#">Canselled(0) |</a></li>
+                 <li><a href="#">Refunded(0) |</a></li>
+                 <li><a href="#">Failed(0) |</a></li>
+              </ul>
+               
+            </div>
+            <div class="free_orders_big">
+                <button>Filter</button>
+                <input placeholder='search orders'/>
+                <input placeholder='search range orders'/>
+                <button>Filter</button>
+                <button>Reset</button>
+                <button>Expert all</button>
+                <button>Expert Filtered</button>
+            </div>
+            <div class="free_orders_mid">
+                 No orders found
+            </div >
+
+         </div>
+         
+       </div>
+    </div>
+    {% endblock body %} 
+
+
+
+
+    

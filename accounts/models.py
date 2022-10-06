@@ -20,7 +20,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     birthday = models.DateField(_("birth date"), blank=True, null=True)
     usertype = models.IntegerField(verbose_name="Cins",choices=USERTYPE,null=True,blank=True,default=1)
 
-    image = models.ImageField(_("image"),null=True,blank=True,upload_to = "user_pp")
+    image = models.ImageField(_("image"),null=True,blank=True,upload_to="user_pp")
     
     last_name = models.CharField(_('last name'), max_length=255, blank=True)
     image=models.ImageField(_('Add Photo'),null=True)
@@ -54,7 +54,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Account'
         verbose_name_plural = 'Accounts'
-        
+        managed = True
 
     def __unicode__(self):
         return u'%s %s' % (self.first_name, self.last_name)

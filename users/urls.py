@@ -1,13 +1,16 @@
 from django.urls import path
-from users.views import buyer_view, buyer_notification, buyer_invoice, buyer_adress, buyer_wishlist,seller_dashboard
+from users.views import *
 
 app_name="user"
 
 urlpatterns = [
-    path('user_info/<id>/',buyer_view,name="buyer_info"),
-    path('buyer_notifications/<id>/',buyer_notification,name="buyer_notf"),
-    path('buyer_invoice/<id>/',buyer_invoice,name="buyer_invoice"),
-    path('buyer_adress/<id>/',buyer_adress,name="buyer_adress"),
-    path('buyer_wishlist/<id>/',buyer_wishlist,name="buyer_wishlist"),
-    path('seller_dashboard/<id>/',seller_dashboard,name ='seller_dashboard')
+    path('user_info/<id>/',buyer_view,name="user_info"),
+    path('user_notifications/<id>/',buyer_notification,name="user_notf"),
+    path('user_invoice/<id>/',buyer_invoice,name="user_invoice"),
+    path('user_adress/<id>/',buyer_adress,name="user_adress"),
+    path('user_wishlist/<id>/',buyer_wishlist,name="user_wishlist"),
+    path('seller_dashboard/<id>/',seller_dashboard,name ='seller_dashboard'),
+    path("seller_product/<id>/",seller_product,name="seller_product"),
+    path("seller_order/<id>/",seller_order,name="seller_order"),
+    path("store_seller/<slug>/",store_view,name="store_view")
     ]

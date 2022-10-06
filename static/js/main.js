@@ -912,3 +912,38 @@
         subscribePopup();
     });
 })(jQuery);
+$(".product_new").on("click",function(){
+    $(".newproduct-details").toggleClass("show")
+})
+
+
+$(document).on("click",".open_data_modal",function(e){
+
+    console.log($(this));
+    console.log($(this).data('id'));
+    let discount=$(this).data('discount');
+    let id=$(this).data('id');
+
+    $.ajax({
+
+        url : 'http://127.0.0.1:8000/api_view/'+id+'/?discount='+discount,
+        type : 'GET',
+    
+        dataType:'json',
+        success : function(data) {              
+            data=data[0];
+            $('.modal-content').find('h1').text(data.name);
+            $('.modal-content').find('.ps-product__price').text(data.price);
+            $('.modal-content').find('.ps-product__desc').text(data.description);
+        },
+        error : function(request,error)
+        {
+            alert("Request: "+JSON.stringify(request));
+        }
+    });
+
+    $(".unique_thumb_img").attr("src",$(this).parents(".ps-product__thumbnail").find("img").attr("src"));
+    $(".unique_thumb_name").text($(this).parents(".ps-product__thumbnail").next().find(".ps-product__vendor").text());
+
+});
+
