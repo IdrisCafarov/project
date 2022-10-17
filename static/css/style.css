@@ -18117,3 +18117,37 @@ html .bg--parallax {
   object-fit: cover !important;
 
 }
+
+button.button_add:hover {
+  background-color: #514C4C;
+  color: white;
+}
+
+button.button_add {
+  background-color: #fcb800;
+  border-radius: 8px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 20px;
+  width: 100%;
+  height: 5%;
+}
+
+input.img_bg {
+  background-color: yellow;
+  width: 100%;
+  height: 100px;
+}
+.bor{
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  background-color: #000;
+  border-radius: 100%;
+  cursor:pointer;
+}
+.bor p{
+  color: white;
+
+}

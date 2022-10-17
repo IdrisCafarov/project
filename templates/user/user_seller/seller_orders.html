@@ -33,7 +33,7 @@
                 <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_product' request.user.id %}">Products</a></p></li>
                 <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_order' request.user.id %}">Order</a></p></li>
                 <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Withdrafts</a></p></li>
-                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Settings</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:vendor_settings' request.user.id %}">Settings</a></p></li>
             </ul>
             <ul class="dasbord_ul1">
                 <li><i class="fas fa-external-link-alt"></i></li>

@@ -12,5 +12,7 @@ urlpatterns = [
     path('seller_dashboard/<id>/',seller_dashboard,name ='seller_dashboard'),
     path("seller_product/<id>/",seller_product,name="seller_product"),
     path("seller_order/<id>/",seller_order,name="seller_order"),
-    path("store_seller/<slug>/",store_view,name="store_view")
+    path("store_seller/<slug>/",store_view,name="store_view"),
+    path("add_product/<id>/",add_product,name="add_product"),
+    path("vendor_settings/<id>/",vendor_set,name="vendor_settings")
     ]

@@ -1,11 +1,20 @@
 from django.contrib import admin
-from product.models import Product,MainCategory,SubCategory,AdsSettings,Brand
+from product.models import Product,MainCategory,SubCategory,AdsSettings,Brand,ProductImage
 
 MAX_OBJECTS=1
 
 # Register your models here.
+admin.site.register(ProductImage)
+
+
+class ProductImageInline(admin.StackedInline):
+  model = ProductImage
+  max_num=10
+  extra=1
+    
 @admin.register(Product)
 class AdminProduct(admin.ModelAdmin):
+    inlines = [ProductImageInline,]
     list_display = ['name','slug','created_date','updated_date','seller']
 
 @admin.register(MainCategory)
@@ -28,3 +37,7 @@ class AdminAdsSettings(admin.ModelAdmin):
 
 
 admin.site.register(Brand)
+
+
+
+

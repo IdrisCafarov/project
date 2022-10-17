@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from product.models import MainCategory,SubCategory,Product,AdsSettings
 from product.serializers import ProductSerializer
 from django.http import HttpResponse
+from django.template.defaulttags import register
 
 # Create your views here.
 
@@ -33,7 +34,7 @@ def product_detail(request,slug):
     context['product'] = product
 
 
-    return render(request,"products/product_detail/product_detail.html",context)
+    return render(request,"product_detail/product_detail.html",context)
 
 def delete_product(request,id):
     product = Product.objects.get(pk=id)
@@ -55,3 +56,9 @@ def detail_api(request,id):
     products = Product.objects.filter(id=id)
     serializer = ProductSerializer(products,many=True)
     return Response(serializer.data)
+
+
+@register.filter
+def exclude_product(self,product):
+    result = self.exclude(id=product.id)
+    return result

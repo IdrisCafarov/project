@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.utils import timezone
 from users.forms import *
 from django.contrib.sites.shortcuts import get_current_site
-from product.models import Product
+from product.models import Product,ProductImage
 
 
 # Create your views here.
@@ -133,7 +133,33 @@ def seller_product(request,id):
 
     return render(request,"user/user_seller/seller_product.html",context)
 
+def add_product(request,id):
+    context = {}
+    
+    usr = get_object_or_404(User, id=id)
 
+    if request.method == 'POST':
+        images = request.FILES.getlist("image", None)
+
+        form = AddProductForm(request.POST, request.FILES or None)
+        if form.is_valid() and images:
+            print("I am in is vaild")
+            form = form.save(commit=False)
+            form.seller = usr
+            form.save()
+            messages.success(request, 'Sizin postunuz uğurla yeniləndi!')
+            for image in images:
+                ProductImage.objects.create(
+                    product=form, image=image
+                )
+            # return redirect(request.META['HTTP_REFERER'])
+            return redirect("product:index")
+        else:
+            context['form'] = form
+
+    context['form'] = AddProductForm()
+
+    return render(request,"user/user_seller/add_product.html",context)
 
 
 def seller_order(request,id):
@@ -148,3 +174,7 @@ def store_view(request,slug):
     context['store'] = store
     context['products'] = products
     return render(request,"user/user_seller/store_detail.html",context)
+
+
+def vendor_set(request,id):
+    return render(request,"user/user_seller/vendor_settings.html")

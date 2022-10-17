@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'phone_field',
     'users',
     'rest_framework',
+    'ckeditor',
+    'widget_tweaks'
     
 ]
 
@@ -149,6 +151,13 @@ else:
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_JQUERY_URL = os.path.join(STATIC_URL, 'jquery-3.2.1.min.js')
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full'
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

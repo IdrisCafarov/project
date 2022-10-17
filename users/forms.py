@@ -12,6 +12,7 @@ from accounts.models import *
 from PIL import Image
 from product.models import Product
 from accounts.options import USERTYPE
+from ckeditor.widgets import CKEditorWidget
 
 
 # get custom user
@@ -196,21 +197,18 @@ class AddProductForm(forms.ModelForm):
     # name=forms.CharField(max_length=1200,widget=forms.TextInput(attrs={
     # 	'placeholder':'Product Name',
     #     'autofocus': '',
+    #     'class' : 'form-control'
     # 	}))
-    # description=forms.CharField(max_length=1200,widget=forms.Textarea(attrs={
-    #     'placeholder':'Description',
-    #     'cols':'30',
-    #     'rows':'10'
-    #     }))
+    # description=forms.CharField(max_length=1200,widget=CKEditorWidget())
 
     # price=forms.IntegerField(widget=forms.NumberInput(attrs={
     #     'type':'number'
         
     # 	}))
 
-    # category = forms.ChoiceField(widget=forms.Select(attrs={
-    #     'type':'number'
-    #     }))
+    # # category = forms.ChoiceField(widget=forms.Select(attrs={
+    # #     'type':'number'
+    # #     }))
 
     # image = forms.ImageField(widget=forms.FileInput(attrs={
     #     'class':'form-control'
@@ -228,7 +226,8 @@ class AddProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ('name','description','price','category','image','discount_percent')
+        exclude = ('seller','sold','draft','slug')
+        fields = ('__all__')
 
 
 

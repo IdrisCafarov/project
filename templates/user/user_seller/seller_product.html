@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
 {% block body %}
      <div class="ps-page--single">
         <div class="ps-breadcrumb">
@@ -35,7 +37,7 @@
                 <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_product' request.user.id %}">Products</a></p></li>
                 <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_order' request.user.id %}">Order</a></p></li>
                 <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Withdrafts</a></p></li>
-                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Settings</a></p></li>
+                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:vendor_settings' request.user.id %}">Settings</a></p></li>
             </ul>
             <ul class="dasbord_ul1">
                 <li><i class="fas fa-external-link-alt"></i></li>
@@ -48,40 +50,14 @@
             <div class="free_error">
                 <p><b>Error!</b> Your account is not enabled for selling, please contact the admin</p>
             </div>
-            <button class="product_new">
-                Product elave et
-            </button>
-        <form action="" method="POST" enctype="multipart/form-data">
-            <div class="free_sales_order">
-                
-                <div class="newproduct-details">
-                    {% csrf_token %}
-                    
-                    <label for="" class="full">
-                        
-                        {{ form.name|as_crispy_field }}
-                    </label>
-                    <label for="">
-                        {{ form.price|as_crispy_field }}
-                    </label>
-                    <label for="">
-                        {{ form.category|as_crispy_field }}
-                    </label>
-                    <label for="">
-                        {{ form.discount_percent|as_crispy_field }}
-                    </label>
-                    <label class="full" for="">
-                        {{ form.description|as_crispy_field }}
-                    </label>
-                    <label class="full" for="">
-                        {{ form.image|as_crispy_field }}
-                    </label>
-                    <div class="form-group submit">
-                        <button class="ps-btn" type="submit">Add Product</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+            <a href="{% url 'user:add_product' request.user.id %}">
+                <button class="button_add">
+                    Product elave et
+                </button>
+
+            </a>
+            
+        
         <div class="ps-shopping ps-tab-root mt-5">
             <div class="ps-shopping__header">
                 
@@ -104,7 +80,7 @@
                            
                             <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 ">
                                 <div class="ps-product ps-product--inner">
-                                    <div class="ps-product__thumbnail"><a href="product-default.html"><img src="{{product.image.url}}" alt="" width="138" height="138"></a>
+                                    <div class="ps-product__thumbnail"><a href="{{product.get_absolute_url}}"><img src="{{product.main_product_image}}" alt="" width="138" height="138"></a>
                                         {% if product.discount_percent > 0 %}
                                             <div class="ps-product__badge">-{{product.discount_percent}}%</div>
                                             {% endif %}
@@ -116,7 +92,7 @@
                                         </ul>
                                     </div>
                                     <div class="ps-product__container"><a class="ps-product__vendor" href="#">{{product.seller.company_name}}</a>
-                                        <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">{{product.name}}</a>
+                                        <div class="ps-product__content"><a class="ps-product__title" href="{{product.get_absolute_url}}">{{product.name}}</a>
                                             <div class="ps-product__rating">
                                                 <select class="ps-rating" data-read-only="true">
                                                     <option value="1">1</option>

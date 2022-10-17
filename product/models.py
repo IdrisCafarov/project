@@ -2,6 +2,8 @@ from django.db import models
 from product.helper import seo
 from django.urls import reverse
 from accounts.models import MyUser
+from ckeditor.fields import RichTextField
+from .options import *
 
 # Create your models here.
 class AdsSettings(models.Model):
@@ -80,6 +82,9 @@ class SubCategory(models.Model):
     def get_absolute_url(self):
         return reverse('post:category_detail', kwargs={'slug': self.slug})
 
+
+
+
     
 
 
@@ -88,7 +93,8 @@ class SubCategory(models.Model):
 class Product(models.Model):
     seller = models.ForeignKey(MyUser,on_delete=models.CASCADE,null=True,verbose_name="seller")
     name = models.CharField(verbose_name="Product Name",max_length=50)
-    description = models.TextField(verbose_name="About Product")
+    description = RichTextField(verbose_name="About Product")
+    mini_description = RichTextField(verbose_name="Mini Decription",null=True)
     price = models.FloatField(verbose_name="Price")
 
 
@@ -96,12 +102,22 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand,null=True,verbose_name="Brand",on_delete=models.CASCADE,related_name="product_brand")
 
     slug = models.SlugField(editable=False, verbose_name="Slug",unique=True)
-    image = models.ImageField(upload_to="products_img",verbose_name="Image")
+    
     draft = models.BooleanField(verbose_name="Shared",default=True)
     created_date = models.DateTimeField(verbose_name="Created Date",auto_now_add=True)
     updated_date = models.DateTimeField(verbose_name="Updated_Date",auto_now=True)
     discount_percent = models.FloatField(default=0)
     sold = models.IntegerField(default=0)
+
+    #not requiered
+    color = models.CharField(max_length=200,verbose_name="Rengleri Daxil Edin :",null=True,blank=True)
+    style = models.CharField(max_length=200,verbose_name="Style Elave Edin :",null=True,blank=True)
+    wireless = models.IntegerField(choices=ANSWERTYPE,verbose_name="Wireless",null=True,blank=True)
+    dimensions = models.CharField(max_length=200,verbose_name="Olculeri",null=True,blank=True)
+    weight = models.IntegerField(null=True,verbose_name="Weight",blank=True)
+    battery_life = models.CharField(max_length=100,verbose_name="Battery Life",null=True,blank=True)
+    bluetooth = models.IntegerField(choices=ANSWERTYPE,null=True,blank=True)
+
     
     @property
     def discount(self):
@@ -113,16 +129,34 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def main_product_image(self):
+        product_images = ProductImage.objects.filter(product=self)
+        if product_images.exists():
+            return product_images.first().image.url
+        return '-'
+
     class Meta:
         verbose_name ="Product"
         verbose_name_plural ="Products"
 
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
-        self.slug = seo(self.name)
+        self.slug = seo(self.name)+str(self.seller.id)
         super(Product, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('product:product_detail', kwargs={"slug": self.slug})
-    
 
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name="Images")
+    image = models.ImageField(upload_to="product_images")
+
+    def __str__(self):
+        return self.product.name or self.product.slug
+    
+    
+    class Meta:
+        verbose_name = "Product Image"
+        verbose_name_plural = "Product Images"
