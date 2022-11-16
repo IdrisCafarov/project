@@ -53,26 +53,26 @@ def buyer_view(request,id):
     return render(request,"user/user_information/user_information.html",context)
 
 
-def buyer_notification(request,id):
-    usr = get_object_or_404(User, id=id)
+# def buyer_notification(request,id):
+#     usr = get_object_or_404(User, id=id)
 
-    return render(request,"user/user_buyer/notifications/notifications.html")
+#     return render(request,"user/user_buyer/notifications/notifications.html")
 
-def buyer_invoice(request,id):
-    usr = get_object_or_404(User, id=id)
+# def buyer_invoice(request,id):
+#     usr = get_object_or_404(User, id=id)
 
-    return render(request,"user/user_buyer/invoice/invoices.html")
+#     return render(request,"user/user_buyer/invoice/invoices.html")
 
-def buyer_wishlist(request,id):
-    usr = get_object_or_404(User, id=id)
+# def buyer_wishlist(request,id):
+#     usr = get_object_or_404(User, id=id)
 
-    return render(request,"user/user_buyer/wishlist/whishlist.html")
+#     return render(request,"user/user_buyer/wishlist/whishlist.html")
 
 
 def buyer_adress(request,id):
     usr = get_object_or_404(User, id=id)
 
-    return render(request,"user/user_buyer/adress/addresses.html")
+    return render(request,"user/user_buyer/address/addresses.html")
 
 
 
@@ -162,19 +162,56 @@ def add_product(request,id):
     return render(request,"user/user_seller/add_product.html",context)
 
 
-def seller_order(request,id):
-    return render(request,"user/user_seller/seller_orders.html")
+# def seller_order(request,id):
+#     return render(request,"user/user_seller/seller_orders.html")
 
 
-def store_view(request,slug):
+def store_view(request,id):
     context = {}
-    product = get_object_or_404(Product,slug=slug)
-    store = product.seller
-    products = Product.objects.filter(seller=store)
+    seller = get_object_or_404(User,id=id)
+    store = get_object_or_404(Vendor,seller_id=seller.id)
+    
+    products = Product.objects.filter(seller=seller)
     context['store'] = store
     context['products'] = products
     return render(request,"user/user_seller/store_detail.html",context)
 
+def store_about(request,id):
+    context = {}
+    seller = get_object_or_404(User,id=id)
+    store = get_object_or_404(Vendor,seller_id=seller.id)
+    
+    products = Product.objects.filter(seller=seller)
+    context['store'] = store
+    context['products'] = products
+    return render(request,"user/user_seller/store_detail_about.html",context)
+
 
 def vendor_set(request,id):
-    return render(request,"user/user_seller/vendor_settings.html")
+    context = {}
+    usr = get_object_or_404(User, id=id)
+    store = get_object_or_404(Vendor,seller_id=usr.id)
+    
+    
+
+    if request.method == 'POST':
+        form = VendorForm(request.POST, request.FILES or None ,instance=store)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Sizin postunuz uğurla yeniləndi!')
+            return HttpResponseRedirect('/')
+    else:
+        form = VendorForm(instance=store)
+
+    context['form'] = form
+
+    return render(request,"user/user_seller/vendor_settings.html",context)
+
+
+def seller_payment(request):
+    return render(request,"user/user_seller/seller_payment.html")
+
+
+# def withdraw(requets,id):
+#     return render(request,"user/user_seller/seller_withdraw.html")
+

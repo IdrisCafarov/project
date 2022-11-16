@@ -5,12 +5,17 @@
         <section class="ps-store-list">
             <div class="container">
                 <aside class="ps-block--store-banner">
+                    {% if store.image %}
+                    <div class="ps-block__content bg--cover" data-background="{{store.image.url}}">
+                    {% else %}
                     <div class="ps-block__content bg--cover" data-background="{% static 'img/vendor/store/default_banner.jpg' %}">
-                        <h2>Basliq</h2>
-                        <h3>{{store.company_name}}</h3><a class="ps-block__inquiry" href="#"><i class="fa fa-question"></i> Inquiry</a>
+                    {% endif %}
+                    
+                        
+                        <h3>{{store.name}}</h3><a class="ps-block__inquiry" href="#"><i class="fa fa-question"></i> Inquiry</a>
                     </div>
                     <div class="ps-block__user">
-                        <div class="ps-block__user-avatar"><img src="{% static 'img/vendor/store/user/5.jpg' %}" alt="">
+                        <div class="ps-block__user-avatar"><img style="object-fit:cover;" src="{{store.seller.get_avatar}}" alt="">
                             <select class="ps-rating" data-read-only="true">
                                 <option value="1">1</option>
                                 <option value="1">2</option>
@@ -20,8 +25,8 @@
                             </select>
                         </div>
                         <div class="ps-block__user-content">
-                            <p><i class="icon-map-marker"></i> 326 Orchard Str, Riau, Riau Indonesia</p>
-                            <p><i class="icon-envelope"></i> <a href="http://nouthemes.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99fef6e9ebf6d9fef4f8f0f5b7faf6f4">[email&#160;protected]</a></p>
+                            <p><i class="icon-map-marker"></i> {{store.street_1}}, Riau, {{store.city}} {{store.country}}</p>
+                            <p><i class="icon-envelope"></i> <a href="#">{{store.email}}</a></p>
                         </div>
                     </div>
                 </aside>
@@ -34,24 +39,35 @@
                             </div>
                         </aside>
                         <aside class="widget widget--vendor">
-                            <h3 class="widget-title">Store Categories</h3>
-                            <ul class="ps-list--arrow">
-                                <li><a href="#">Interior</a></li>
-                                <li><a href="#">Lighting</a></li>
-                                <li class="menu-item-has-children"><a href="#">Exterior</a>
-                                    <ul class="sub-menu ps-list--arrow">
-                                        <li><a href="#"> Custom Grilles</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><a href="#">Wheels & Tires</a>
-                                    <ul class="sub-menu ps-list--categories">
-                                        <li><a href="#"> Custom Grilles</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Factory Wheels</a></li>
-                            </ul>
+                            <h2>soon...</h2>
+                            <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    Launch demo modal
+                                </button>
+                                
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                        ...
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
                         </aside>
-                        <aside class="widget widget--vendor widget--open-time">
+                        
+                        {% comment %} <aside class="widget widget--vendor widget--open-time">
                             <h3 class="widget-title"><i class="icon-clock3"></i> Store Hours</h3>
                             <ul>
                                 <li><strong>Monday:</strong><span>8:00 am - 6:00 pm</span></li>
@@ -60,15 +76,15 @@
                                 <li><strong>Monday:</strong><span>8:00 am - 6:00 pm</span></li>
                                 <li><strong>Monday:</strong><span>8:00 am - 6:00 pm</span></li>
                             </ul>
-                        </aside>
+                        </aside> {% endcomment %}
                     </div>
                     <div class="ps-section__right">
                         <nav class="ps-store-link">
                             <ul>
                                 <li class="active"><a href="store-detail.html">Products</a></li>
-                                <li><a href="store-detail-info.html">About</a></li>
+                                <li><a href="{% url 'user:store_about' request.user.id %}">About</a></li>
                                 <li><a href="store-detail.html">Policies</a></li>
-                                <li><a href="store-detail.html">Reviews(0)</a></li>
+                                {% comment %} <li><a href="store-detail.html">Reviews(0)</a></li> {% endcomment %}
                             </ul>
                         </nav>
                         <div class="ps-tabs">
@@ -203,5 +219,6 @@
         </div>
     </div>
 
+    
     {% endblock body %}
     

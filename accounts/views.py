@@ -15,7 +15,7 @@ from .models import *
 from django.contrib import messages
 from datetime import datetime
 from django.utils import timezone
-from django.contrib.auth.models import Group
+
 
 def register(request):
     context = {}
@@ -53,12 +53,16 @@ def register(request):
 
     if request.method == 'POST' and 'btn_seller'in request.POST:
         form_s = SellerRegisterForm(request.POST, request.FILES or None)
+        
         if form_s.is_valid():
             user = form_s.save(commit=False)
+            
             user.is_active = False
             user.is_seller = True
             user.created_date = timezone.now()
             user.save()
+            vendor = Vendor.objects.create(name=user.company_name,seller=user)
+            vendor.save()
             current_site = get_current_site(request)
             mail_subject = 'Hesab aktivləşdirilməsi'
             message = render_to_string('accounts/acc_active_email.html', {
@@ -130,7 +134,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
+        # return redirect('products:index')
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.<a href="/login">Daxil ol</a>')
     else:
         return HttpResponse('Activation link is invalid!')
@@ -139,12 +143,15 @@ def login_view(request):
     context = {}
     if request.user.is_authenticated:
         return redirect('product:index')
+    next = request.GET.get("next", None)
     form = LoginForm(request.POST or None)
     if form.is_valid():
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         user = authenticate(email=email, password=password)
         login(request, user)
+        if next:
+            return redirect(next)
         return redirect('product:index')
     context['form'] = form
     return render(request, 'login_register/login.html', context)

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block body %}
      <div class="ps-page--single">
@@ -26,22 +27,35 @@
     
     <div class="free_bigdiv">
        <div class="free_middiv">
-         <div class="free_div1">
+        <div class="col-md-3">
+          <div class="sidebar">
+            <ul class="list-dashboard">
+      
+      
+              <li class="d-flex justify-content-center other-lies  common-lies w-100">
+                  <a href="{% url 'user:seller_dashboard' request.user.id %}"><i class="fas fa-tachometer-alt icons"></i>Dashboard</a>
+                  
+                  </li>
+              <li class="d-flex justify-content-center other-lies common-lies">
+                  <a href="{% url 'user:seller_product' request.user.id %}"><i class="fas fa-briefcase icons"></i>Products</a>
+                  
+              <li class="d-flex justify-content-center active-dashboard common-lies">
+                  <a href="{% url 'product:seller_order' %}"><i class="fas fa-shopping-cart icons"></i>Orders</a>
+                  
+              </li>
+              <li class="d-flex justify-content-center other-lies common-lies">
+                  <a href="{% url 'user:vendor_settings' request.user.id %}"><i class="fas fa-cog icons"></i>Settings</a>
+                  
+              </li>
+              <li class="d-flex justify-content-center other-lies">
+                <button><a href="{% url 'user:store_view' request.user.id %}" title="Visit Store"><i class="fas fa-external-link-alt"></i></a></button>
+                <button><a href="{% url 'user:user_info' request.user.id %}"><i class="fas fa-user"></i></a></button>
+                <button><a href="{% url 'accounts:logout' %}"><i class="fa-solid fa-power-off"></i></a></button>
+              </li>
+          </ul>
             
-            <ul class="dasbord_ul">
-                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_dashboard' request.user.id %}">Dashboard</a></p></li>
-                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_product' request.user.id %}">Products</a></p></li>
-                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:seller_order' request.user.id %}">Order</a></p></li>
-                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="#">Withdrafts</a></p></li>
-                <li><p><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;<a href="{% url 'user:vendor_settings' request.user.id %}">Settings</a></p></li>
-            </ul>
-            <ul class="dasbord_ul1">
-                <li><i class="fas fa-external-link-alt"></i></li>
-                <li><i class="fas fa-external-link-alt"></i></li>
-                <li><i class="fas fa-external-link-alt"></i></li>
-            </ul>
-           
-         </div>
+          </div>
+          </div>
          <div class="free_div2">
             <div class="free_error">
                 <p><b>Error!</b> Your account is not enabled for selling, please contact the admin</p>
@@ -71,11 +85,71 @@
             <div class="free_orders_mid">
                  No orders found
             </div >
+            <div class="list-group">
+                
+                {% for order in orders %}
+                
+                <a href="#"  class="list-group-item list-group-item-action active" aria-current="true" style="background-color:forestgreen">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">#{{order.id}}</h5>
+                    <small>3 days ago</small>
+                  </div>
+                  <p class="mb-1" style="color:black ;">Customer :{{order.customer.first_name}} {{order.customer.last_name}}</p>
+                  <p class="mb-1" style="color:black ;">Adress :</p>
+                  <p class="mb-1" style="color:black ;">Email :{{order.customer.email}}</p>
+                  <h3>Product Name </h3>
+                  <p class="mb-1" style="color:black ;">{{order.product.name}}</p>
+                  
+                  <small>{{order.status}}</small>
+                </a>
+                <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-primary" style="margin-bottom: 30px;" data-bs-toggle="modal" data-bs-target="#exampleModal-{{order.id}}">
+                    Edit
+                  </button>
+
+                {% endfor %}
+
+                <!-- Modal -->
+                {% for order in orders%}
+                      <div class="modal fade" id="exampleModal-{{order.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="" method="post">
+                                {% csrf_token %}
+
+                                
+                                  <input type="hidden" name="smth" value="{{order.id}}">
+                                  {{form|crispy}}
+                                
+
+                              
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </form>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                
+                
+                
+              </div>
+            
 
          </div>
          
-       </div>
-    </div>
+      </div>
+  </div>
+
+    
     {% endblock body %} 
 
 

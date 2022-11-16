@@ -1,5 +1,6 @@
+
 from django.contrib import admin
-from product.models import Product,MainCategory,SubCategory,AdsSettings,Brand,ProductImage
+from product.models import *
 
 MAX_OBJECTS=1
 
@@ -38,6 +39,15 @@ class AdminAdsSettings(admin.ModelAdmin):
 
 admin.site.register(Brand)
 
+admin.site.register(Basket)
+
+
+admin.site.register(Invoice)
+
+admin.site.register(Notification)
+
+
+admin.site.register(Comment)
 
 
 

@@ -10,9 +10,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from accounts.models import *
 from PIL import Image
-from product.models import Product
+from product.models import Product, Invoice
 from accounts.options import USERTYPE
 from ckeditor.widgets import CKEditorWidget
+
+from users.models import Vendor
 
 
 # get custom user
@@ -230,4 +232,108 @@ class AddProductForm(forms.ModelForm):
         fields = ('__all__')
 
 
+
+class VendorForm(forms.ModelForm):
+    image=forms.FileField(max_length=100,widget=forms.FileInput(attrs={
+    	'id':'uploadbanner',
+        'type':'file',
+        'style':'display: none;',
+        
+    	}))
+
+
+
+    name=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    	'placeholder':'Store Name',
+        'autofocus': '',
+        
+    	}))
+
+    # description=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    # 	'placeholder':'Store Name',
+    #     'autofocus': '',
+        
+    # 	}))
+
+    email=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    	'placeholder':'Store Email',
+        
+        
+    	}))
+
+    street_1=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    	'placeholder':'Street adress',
+        
+        
+    	}))
+
+    street_2=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    	'placeholder':'Apartment, suite, unit etc. (optional)',
+        'requiered':'false'
+        
+        
+    	}))
+
+    city=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    	'placeholder':'Town / City',
+        
+        
+    	}))
+
+    zip=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    	'placeholder':'Postcode / Zip',
+        
+        
+    	}))
+
+    phone_number=forms.CharField(max_length=100,widget=forms.TextInput(attrs={
+    	'placeholder':'+994...',
+        
+        
+    	}))
+
+
+
+    class Meta:
+        model = Vendor
+        exclude = ('seller',)
+        fields = ('__all__')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key, field in self.fields.items():
+            field.label = ""
+
+
+class ChangeStatusForm(forms.ModelForm):
+    
+    # name=forms.CharField(max_length=1200,widget=forms.TextInput(attrs={
+    # 	'placeholder':'Product Name',
+    #     'autofocus': '',
+    #     'class' : 'form-control'
+    # 	}))
+    # description=forms.CharField(max_length=1200,widget=CKEditorWidget())
+
+    # price=forms.IntegerField(widget=forms.NumberInput(attrs={
+    #     'type':'number'
+        
+    # 	}))
+
+    # # category = forms.ChoiceField(widget=forms.Select(attrs={
+    # #     'type':'number'
+    # #     }))
+
+    # image = forms.ImageField(widget=forms.FileInput(attrs={
+    #     'class':'form-control'
+    # }))
+
+    # discount=forms.IntegerField(widget=forms.NumberInput(attrs={
+    #     'type':'number'
+        
+    # 	}))
+
+    class Meta:
+        model = Invoice
+        
+        fields = ('status',)
 

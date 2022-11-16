@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from accounts.models import *
 from PIL import Image
+from users.models import *
 
 # get custom user
 User = get_user_model()
@@ -139,3 +140,9 @@ class LoginForm(forms.Form):
 			if not user:
 				raise forms.ValidationError('Email or Password is incorrect')
 		return super(LoginForm, self).clean()
+
+
+# class VendorRegisterForm(forms.ModelForm):
+#     class Meta:
+#         model = Vendor
+#         fields = "__all__"

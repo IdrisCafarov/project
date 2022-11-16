@@ -2,6 +2,7 @@
 {% load static %}
 {% block body %}
     <div id="homepage-3">
+        {% csrf_token %}
         <div class="ps-home-banner">
             <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
                 <div class="ps-banner--market-1" data-background="{% static 'img/slider/home-3/home-banner/1.jpg' %}">
@@ -91,16 +92,53 @@
                     <div class="ps-carousel--nav owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="true" data-owl-item="5" data-owl-item-xs="2" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="4" data-owl-item-xl="5" data-owl-duration="1000" data-owl-mousedrag="on">
                         {% for product in products %}
                         <div class="ps-product ps-product--inner">
-                            <div class="ps-product__thumbnail"><a href="product-default.html"><img src="{{product.image.url}}" alt=""></a>
+                            <div class="ps-product__thumbnail"><a href="{{product.get_absolute_url}}"><img src="{{product.main_product_image}}" alt=""></a>
 
                                 {% if product.discount_percent > 0 %}
                                             <div class="ps-product__badge">-{{product.discount_percent}}%</div>
                                             {% endif %}
                                 <ul class="ps-product__actions">
-                                    <li><a href="#" data-toggle="tooltip" data-placement="top" title="Read More"><i class="icon-bag2"></i></a></li>
+                                    {% comment %} <i class="fa-solid fa-heart"></i> {% endcomment %}
+                                    <li>
+                                    {% if request.user.is_authenticated  %}
+                                    {% if item_already_in_cart  %}
+                                        <a href="{% url 'product:showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4">Go to Cart</a>
+                                    {% else %}
+                                    <form action="/add-to-cart" class="d-inline">
+                                        <input type="hidden" name="prod_id" value="{{product.id}}" id="prod_id">
+                                        <button type="submit" class="btn">
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Read More"><i class="icon-bag2"></i></a>
+                                        </button>
+                                        
+                                    </form>
+                                    {% endif %}
+                                    {% endif %}
+
+                                    {% if not request.user.is_authenticated %}
+                                    <form action="/add-to-cart" class="d-inline">
+                                        <input type="hidden" name="prod_id" value="{{product.id}}" id="prod_id">
+                                        <button type="submit" class="btn">
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Read More"><i class="icon-bag2"></i></a>
+                                        </button>
+                                        
+                                    </form>
+                                    {% endif %}
+                                        
+                                        {% comment %} <a href="#" data-toggle="tooltip" data-placement="top" title="Read More"><i class="icon-bag2"></i></a> {% endcomment %}
+                                    </li>
                                     <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                    <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
+                                    
+                                    <li 
+                                    onclick="addWishlist('{{ product.id }}')"
+                                     id="wishDiv-{{product.id}}">
+                                        {% if request.user in product.wishlist.all %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="fa-solid fa-heart"></i></a>
+                                        {% else %}
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a>
+                                        {% endif %}
+                                    </li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
+                                    
                                 </ul>
                             </div>
                             <div class="ps-product__container"><a class="ps-product__vendor" href="{% url 'user:store_view' product.slug %}">{{product.seller.company_name}}</a>

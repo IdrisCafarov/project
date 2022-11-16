@@ -28,11 +28,16 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/market-place-1.css' %}">
     <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    
+        
+    
     
     </head>
 
 <body>
-    <div class="ps-block--promotion-header bg--cover" data-background="{% static 'img/promotions/header-promotion.jpg' %}">
+    {% comment %} <div class="ps-block--promotion-header bg--cover" data-background="{% static 'img/promotions/header-promotion.jpg' %}">
         <div class="container">
             <div class="ps-block__left">
                 <h3>20%</h3>
@@ -45,7 +50,7 @@
                 <p>Enter Promotion<span>Sale2019</span></p>
             </div><a class="ps-btn ps-btn--sm" href="#">Shop now</a>
         </div>
-    </div>
+    </div> {% endcomment %}
     <header class="header header--standard header--market-place-1" data-sticky="true">
         <div class="header__top">
             <div class="container">
@@ -58,18 +63,18 @@
                         <li><a href="#">Track Your Order</a></li>
                         <li>
                             <div class="ps-dropdown"><a href="#">US Dollar</a>
-                                <ul class="ps-dropdown-menu">
+                                {% comment %} <ul class="ps-dropdown-menu">
                                     <li><a href="#">Us Dollar</a></li>
                                     <li><a href="#">Euro</a></li>
-                                </ul>
+                                </ul> {% endcomment %}
                             </div>
                         </li>
                         <li>
                             <div class="ps-dropdown language"><a href="#"><img src="{% static 'img/flag/en.png' %}" alt="">English</a>
-                                <ul class="ps-dropdown-menu">
+                                {% comment %} <ul class="ps-dropdown-menu">
                                     <li><a href="#"><img src="{% static 'img/flag/germany.png' %}" alt=""> Germany</a></li>
                                     <li><a href="#"><img src="{% static 'img/flag/fr.png' %}" alt=""> France</a></li>
-                                </ul>
+                                </ul> {% endcomment %}
                             </div>
                         </li>
                     </ul>
@@ -82,7 +87,7 @@
                     <div class="menu--product-categories">
                         <div class="menu__toggle"><i class="icon-menu"></i><span> Shop by Department</span></div>
                         <div class="menu__content">
-                            <ul class="menu--dropdown">
+                            {% comment %} <ul class="menu--dropdown">
                                 <li><a href="#"><i class="icon-star"></i> Hot Promotions</a>
                                 </li>
                                 <li class="menu-item-has-children has-mega-menu"><a href="#"><i class="icon-laundry"></i> Consumer Electronic</a>
@@ -170,7 +175,7 @@
                                 </li>
                                 <li><a href="#"><i class="icon-tag"></i> Vouchers &amp; Services</a>
                                 </li>
-                            </ul>
+                            </ul> {% endcomment %}
                         </div>
                     </div><a class="ps-logo" href="{% url 'product:index' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
                 </div>
@@ -190,26 +195,34 @@
                 </div>
                 {% if request.user.is_buyer %}
                 <div class="header__content-right">
-                    <div class="header__actions"><a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
-                        <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i>0</i></span></a>
+                    <div class="header__actions"><a class="header__extra" href="{% url 'product:user_wishlist' %}"><i class="icon-heart"></i><span><i>
+                        {% if not request.user.wishlist.count   %}
+                                        0
+                                {% elif request.user.is_authenticated %}
+                                    {{request.user.wishlist.count}}
+                                {% else %}
+                                    0
+                                {% endif %}
+                        
+                    </i></span></a>
+                        <div class="ps-cart--mini"><a class="header__extra" href="{% url 'product:showcart' %}"><i class="icon-bag2"></i><span><i>{{request.user.basket_user.count}}</i></span></a>
                             <div class="ps-cart__content">
                                 <div class="ps-cart__items">
+                                    {% for product in carts %}
                                     <div class="ps-product--cart-mobile">
-                                        <div class="ps-product__thumbnail"><a href="#"><img src="{% static 'img/products/clothing/7.jpg' %}" alt=""></a></div>
-                                        <div class="ps-product__content"><a class="ps-product__remove" href="#"><i class="icon-cross"></i></a><a href="product-default.html">MVMTH Classical Leather Watch In Black</a>
-                                            <p><strong>Sold by:</strong> YOUNG SHOP</p><small>1 x $59.99</small>
+                                        <div class="ps-product__thumbnail product_basket"><a href="#"><img src="{{product.product.main_product_image}}" alt=""></a></div>
+                                        <div class="ps-product__content">
+                                            <a class="ps-product__remove remove-cart" href="#" pid={{product.product.id}}>
+                                                {% comment %} <i class="icon-cross"></i></a> {% endcomment %}
+                                            <a href="product-default.html">{{product.product.name}}</a>
+                                            <p><strong>Sold by:</strong> {{product.product.seller.company_name}}</p><small><span id="quant_base-{{product.product.id}}">{{product.quantity}}</span> x ${{product.product.discount}}</small>
                                         </div>
-                                    </div>      
-                                    <div class="ps-product--cart-mobile">
-                                        <div class="ps-product__thumbnail"><a href="#"><img src="{% static 'img/products/clothing/5.jpg' %}" alt=""></a></div>
-                                        <div class="ps-product__content"><a class="ps-product__remove" href="#"><i class="icon-cross"></i></a><a href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
-                                            <p><strong>Sold by:</strong> YOUNG SHOP</p><small>1 x $59.99</small>
-                                        </div>
-                                    </div>
+                                    </div>  
+                                    {% endfor %}
                                 </div>
                                 <div class="ps-cart__footer">
-                                    <h3>Sub Total:<strong>$59.99</strong></h3>
-                                    <figure><a class="ps-btn" href="shopping-cart.html">View Cart</a><a class="ps-btn" href="checkout.html">Checkout</a></figure>
+                                    <h3>Sub Total:<strong><span id="amount_base"> ${{amount|floatformat:2}}</span></strong></h3>
+                                    <figure><a class="ps-btn" href="{% url 'product:showcart' %}">View Cart</a><a class="ps-btn" href="checkout.html">Checkout</a></figure>
                                 </div>
                             </div>
                         </div>
@@ -217,11 +230,11 @@
                             <div class="ps-block__content">
                                 <ul class="ps-list--arrow">
                                     <li><a href="{% url 'user:user_info' request.user.id %}">Account Information</a></li>
-                                    <li><a href="{% url 'user:user_notf' request.user.id %}">Notifications</a></li>
-                                    <li><a href="{% url 'user:user_invoice' request.user.id %}">Invoices</a></li>
-                                    <li><a href="{% url 'user:user_adress' request.user.id %}">Address</a></li>
+                                    <li><a href="{% url 'product:notifications' %}">Notifications</a></li>
+                                    <li><a href="{% url 'product:invoice' %}">Invoices</a></li>
+                                    {% comment %} <li><a href="{% url 'user:user_adress' request.user.id %}">Address</a></li> {% endcomment %}
                                     <li><a href="recent-viewed-product.html">Recent Viewed Product</a></li>
-                                    <li><a href="{% url 'user:user_wishlist' request.user.id %}">Wishlist</a></li>
+                                    <li><a href="{% url 'product:user_wishlist' %}">Wishlist</a></li>
                                     <li class="ps-block__footer"><a href="{% url 'accounts:logout' %}">Logout</a></li>
                                 </ul>
                             </div>
@@ -232,15 +245,16 @@
                 {% elif request.user.is_seller%}
                 <div class="header__content-right">
                     <div class="header__actions">
-                        <a class="header__extra" href="{% url 'user:seller_dashboard' request.user.id %}"><i class="icon-chart-bars"></i></a>
-                        <div class="ps-block--user-account"><i class="fa-solid fa-shop"></i>
+                        <a class="header__extra" href="{% url 'user:vendor_settings' request.user.id %}"><i class="fa-solid fa-gear"></i></a>
+                        <a class="header__extra" href="{% url 'user:store_view' request.user.id %}"><i class="fa-solid fa-store"></i></a>
+                        <div class="ps-block--user-account"><i class="fa-solid fa-user"></i><span><i>{{request.user.invoice_user.all.count}}</i></span>
                             <div class="ps-block__content">
                                 <ul class="ps-list--arrow">
                                     <li><h4>Welcome {{request.user.company_name}}</h4></li>
                                     <li><a href="{% url 'user:user_info' request.user.id %}">Account Information</a></li>
                                     <li><a href="{% url 'user:seller_dashboard' request.user.id %}">Dashboard</a></li>
-                                    <li><a href="{% url 'user:user_notf' request.user.id %}">Notifications</a></li>
-                                    <li><a href="{% url 'user:user_adress' request.user.id %}">Address</a></li>
+                                    <li><a href="{% url 'product:notifications' %}">Notifications</a></li>
+                                    {% comment %} <li><a href="{% url 'user:user_adress' request.user.id %}">Address</a></li> {% endcomment %}
                                     <li class="ps-block__footer"><a href="{% url 'accounts:logout' %}">Logout</a></li>
                                 </ul>
                             </div>
@@ -250,7 +264,8 @@
 
                 {% else %}
                 <div class="header__content-right">
-                    <div class="header__actions"><a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
+                    <div class="header__actions">
+                        {% comment %} <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
                         <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i>0</i></span></a>
                             <div class="ps-cart__content">
                                 <div class="ps-cart__items">
@@ -272,7 +287,7 @@
                                     <figure><a class="ps-btn" href="shopping-cart.html">View Cart</a><a class="ps-btn" href="checkout.html">Checkout</a></figure>
                                 </div>
                             </div>
-                        </div>
+                        </div> {% endcomment %}
                         <div class="ps-block--user-header">
                             <div class="ps-block__left"><i class="icon-user"></i></div>
                             <div class="ps-block__right"><a href="{% url 'accounts:login' %}">Login</a><a href="{% url 'accounts:register' %}">Register</a></div>
@@ -288,7 +303,7 @@
                     <div class="menu--product-categories">
                         <div class="menu__toggle"><i class="icon-menu"></i><span> Shop by Department</span></div>
                         <div class="menu__content">
-                            <ul class="menu--dropdown">
+                            {% comment %} <ul class="menu--dropdown">
                                 <li><a href="#"><i class="icon-star"></i> Hot Promotions</a>
                                 </li>
                                 <li class="menu-item-has-children has-mega-menu"><a href="#"><i class="icon-laundry"></i> Consumer Electronic</a>
@@ -376,14 +391,14 @@
                                 </li>
                                 <li><a href="#"><i class="icon-tag"></i> Vouchers &amp; Services</a>
                                 </li>
-                            </ul>
+                            </ul> {% endcomment %}
                         </div>
                     </div>
                 </div>
                 <div class="navigation__right">
                     <ul class="menu">
                         <li class="menu-item-has-children"><a href="index.html">Home</a><span class="sub-toggle"></span>
-                            <ul class="sub-menu">
+                            {% comment %} <ul class="sub-menu">
                                 <li><a href="index.html">Marketplace Full Width</a>
                                 </li>
                                 <li><a href="homepage-2.html">Home Auto Parts</a>
@@ -410,10 +425,10 @@
                                 </li>
                                 <li><a href="home-medical.html">Home Medical</a>
                                 </li>
-                            </ul>
+                            </ul> {% endcomment %}
                         </li>
                         <li class="menu-item-has-children has-mega-menu"><a href="shop-default.html">Shop</a><span class="sub-toggle"></span>
-                            <div class="mega-menu">
+                            {% comment %} <div class="mega-menu">
                                 <div class="mega-menu__column">
                                     <h4>Catalog Pages<span class="sub-toggle"></span></h4>
                                     <ul class="mega-menu__list">
@@ -500,10 +515,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> {% endcomment %}
                         </li>
                         <li class="menu-item-has-children has-mega-menu"><a href="#">Pages</a><span class="sub-toggle"></span>
-                            <div class="mega-menu">
+                            {% comment %} <div class="mega-menu">
                                 <div class="mega-menu__column">
                                     <h4>Basic Page<span class="sub-toggle"></span></h4>
                                     <ul class="mega-menu__list">
@@ -553,10 +568,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> {% endcomment %}
                         </li>
                         <li class="menu-item-has-children has-mega-menu"><a href="#">Blogs</a><span class="sub-toggle"></span>
-                            <div class="mega-menu">
+                            {% comment %} <div class="mega-menu">
                                 <div class="mega-menu__column">
                                     <h4>Blog Layout<span class="sub-toggle"></span></h4>
                                     <ul class="mega-menu__list">
@@ -585,7 +600,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> {% endcomment %}
                         </li>
                     </ul>
                     <div class="ps-block--header-hotline inline">
@@ -614,10 +629,10 @@
                     </li>
                     <li>
                         <div class="ps-dropdown language"><a href="#"><img src="{% static 'img/flag/en.png' %}" alt="">English</a>
-                            <ul class="ps-dropdown-menu">
+                            {% comment %} <ul class="ps-dropdown-menu">
                                 <li><a href="#"><img src="{% static 'img/flag/germany.png' %}" alt=""> Germany</a></li>
                                 <li><a href="#"><img src="{% static 'img/flag/fr.png' %}" alt=""> France</a></li>
-                            </ul>
+                            </ul> {% endcomment %}
                         </div>
                     </li>
                 </ul>
@@ -1138,6 +1153,156 @@
             </div>
         </div>
     </div>
+    <script>
+        var wish_url = "{% url 'product:wish' %}"
+        var fill_heart_icon = '<i class="fa-solid fa-heart"></i>'
+        var heart_icon = '<i class="icon-heart"></i>'
+        {% comment %} var basket_url = "{% url 'product:add_basket' %}" {% endcomment %}
+        
+    </script>
+
+    <script>
+        
+        function addWishlist(id){
+            
+            window.event.preventDefault();
+            let addIconBtn = window.event.target
+            var myHeaders = new Headers();
+            myHeaders.append(
+                "X-CSRFToken",
+                document.querySelector("[name=csrfmiddlewaretoken]").value
+            );
+            
+            var formData = new FormData();
+
+            formData.append("id", id);
+
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: formData,
+                redirect: "follow",
+            };
+            
+            response = fetch(wish_url, requestOptions).then(function (response) {
+                console.log(response.ok)
+                    if (response.ok) {
+                        response.json().then((data) => {
+                            
+
+                            console.log(data)
+                            if(data.success){
+                                console.log(addIconBtn)
+                                addIconBtn.classList.remove("icon-heart");
+                                addIconBtn.classList.add("fa-solid" ,"fa-heart");
+                                addIconBtn.style.color = "red"
+                                const icon = document.querySelector('.header__extra');
+                                const num = icon.querySelector('span i');
+                                console.log(num);
+                                num.textContent = `${Number(num.textContent) + 1}`
+                                
+                                $("#wishDiv-"+id).html(fill_heart_icon)
+                            }else{
+                                $("#wishDiv-"+id).html(heart_icon)
+                                addIconBtn.classList.remove("fa-solid","fa-heart");
+                                addIconBtn.classList.add("icon-heart");
+                                addIconBtn.style.color="black";
+                                const icon = document.querySelector('.header__extra');
+                                const num = icon.querySelector('span i');
+                                console.log(num);
+                                num.textContent = `${Number(num.textContent) - 1}`
+                                
+                            }
+                        });
+                    }
+                });
+        }
+        
+    </script>
+    <script>
+        
+        function removeWishlist_html(id){
+            
+            window.event.preventDefault();
+            let addIconBtn = window.event.target
+            var myHeaders = new Headers();
+            myHeaders.append(
+                "X-CSRFToken",
+                document.querySelector("[name=csrfmiddlewaretoken]").value
+            );
+            
+            var formData = new FormData();
+
+            formData.append("id", id);
+
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: formData,
+                redirect: "follow",
+            };
+            
+            response = fetch(wish_url, requestOptions).then(function (response) {
+                console.log(response.ok)
+                    if (response.ok) {
+                        response.json().then((data) => {
+                            
+
+                            console.log(data)
+                            $("#parentWishDiv-"+id).remove()
+                            if(data.success){
+                                console.log(addIconBtn)
+                                
+                                $("#wishDiv_2-"+id).html(fill_heart_icon)
+                            }else{
+                                $("#wishDiv_2-"+id).html(heart_icon)
+                                const icon = document.querySelector('.header__extra');
+                                const num = icon.querySelector('span i');
+                                console.log(num);
+                                num.textContent = `${Number(num.textContent) - 1}`
+                                
+                            }
+                        });
+                    }
+                });
+        }
+
+        function deleteFromWishlist() {
+            const deleteButtons = document.querySelectorAll('.delete_from_wishlist');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', e => {
+                    e.preventDefault();
+                    let parentElement = button.parentNode.parentNode;
+                    let url = button.dataset.url
+                    fetch(url,{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type':'application/json',
+                            'X-CSRFToken': Xcsrftoken
+                        }
+                    }).then(response=>{
+                        if (response.status === 200){
+                            parentElement.remove();
+                            const icon = document.querySelector('.header__extra__wishlist');
+                            const num = icon.querySelector('span i');
+                            num.textContent = `${Number(num.textContent) - 1}`;
+                        }
+                        return response.json();
+                    }).then(data=>{
+                        // Can handle success cases
+                    }).catch(error=>{
+                        // Can handle error cases
+                        console.log(error);
+                    });
+                });
+            });
+        }
+    </script>
+   
+   
+
+
+
     <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="{% static 'plugins/jquery.min.js' %}"></script>
     <script src="{% static 'plugins/nouislider/nouislider.min.js' %}"></script>
@@ -1156,10 +1321,14 @@
     <script src="{% static 'plugins/select2/dist/js/select2.full.min.js' %}"></script>
     <script src="{% static 'plugins/gmap3.min.js' %}"></script>
     <script src="https://kit.fontawesome.com/1c94f3ae54.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <!-- custom scripts-->
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/images.js' %}"></script>
+    <script src="{% static 'js/sales.js' %}"></script>
     
+
 </body>
 
 
