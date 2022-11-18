@@ -877,3 +877,9 @@ $("#wishDiv").on("click", (e) => {
   e.preventDefault();
   console.log(e.target);
 });
+$(".order-status-change i").on("click", (e) => {
+  // $(`${e.target} i`).toggleClass("show")
+  let order = e.target.closest("div").querySelector("ul");
+  console.log(order);
+  $(order).toggleClass("show")
+});

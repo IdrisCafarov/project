@@ -57,7 +57,7 @@
           </div>
           </div>
          <div class="free_div2">
-            <div class="free_error">
+            <!-- <div class="free_error">
                 <p><b>Error!</b> Your account is not enabled for selling, please contact the admin</p>
             </div>
             <div class="free_orders">
@@ -84,12 +84,62 @@
             </div>
             <div class="free_orders_mid">
                  No orders found
-            </div >
+            </div > -->
             <div class="list-group">
-                
+              <div id="order-div">
+                <div id="order-div-head">
+                  <div>
+                    Product Information
+                  </div>
+                  <div>
+                    Price
+                  </div>
+                  <div>
+                    Status
+                  </div>
+                  <div>
+                    Data and Time
+                  </div>
+                </div>
+              <div id="orders">
+
+              
                 {% for order in orders %}
-                
-                <a href="#"  class="list-group-item list-group-item-action active" aria-current="true" style="background-color:forestgreen">
+                <div class="order">
+                  <div>
+                    <h5 class="order-customer">
+                      <i class="fa-solid fa-user"></i> {{order.customer.first_name}} {{order.customer.last_name}}
+                    </h5>
+                    <h5 class="order-address">
+                      <i class="fa-solid fa-location-dot"></i>
+                    </h5>
+                    <h5 class="order-mail">
+                      <i class="fa-solid fa-envelope"></i> {{order.customer.email}}
+                    </h5>
+                    <h5>
+                      Name : {{order.product.name}}
+                    </h5>
+                  </div>
+                  <div class="order-price">
+                    <span>450$</span>
+                  </div>
+                  <div class="order-status">
+                    Pending
+                  </div>
+                  <div class="order-date">
+                    2022-11-03 13:34:12
+                  </div>
+                  <div class="order-status-change">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                    <ul class="order-status-list">
+                      <li>Pending</li>
+                      <li>Pending</li>
+                      <li>Pending</li>
+                      <li>Pending</li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- <a href="#"  class="list-group-item list-group-item-action active" aria-current="true" style="background-color:forestgreen">
                   <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">#{{order.id}}</h5>
                     <small>3 days ago</small>
@@ -101,11 +151,11 @@
                   <p class="mb-1" style="color:black ;">{{order.product.name}}</p>
                   
                   <small>{{order.status}}</small>
-                </a>
+                </a> -->
                 <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary" style="margin-bottom: 30px;" data-bs-toggle="modal" data-bs-target="#exampleModal-{{order.id}}">
+                  <!-- <button type="button" class="btn btn-primary" style="margin-bottom: 30px;" data-bs-toggle="modal" data-bs-target="#exampleModal-{{order.id}}">
                     Edit
-                  </button>
+                  </button> -->
 
                 {% endfor %}
 
@@ -139,8 +189,8 @@
                       </div>
                       {% endfor %}
                 
-                
-                
+                    </div>
+                    </div>
               </div>
             
 

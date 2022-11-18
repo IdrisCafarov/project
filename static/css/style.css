@@ -18498,3 +18498,110 @@ input.img_bg {
 .bor p {
   color: white;
 }
+#order-div{
+  display: flex;
+  flex-direction: column;
+}
+#order-div-head{
+  display: flex;
+  color: #a2abb8;
+  height: 90px;
+  align-items: center;
+  border-bottom: 1px solid gray;
+}
+#order-div-head div:nth-of-type(4),
+.order div:nth-of-type(4){
+width: 18%;
+text-align: center;
+}
+#order-div-head div:nth-of-type(3),
+.order div:nth-of-type(3){
+  width: 14%;
+  text-align: center;
+}
+#order-div-head div:nth-of-type(2),
+.order div:nth-of-type(2){
+width: 14%;
+text-align: center;
+}
+#order-div-head div:nth-of-type(1),
+.order div:nth-of-type(1){
+  width: 50%;
+}
+.order-status-change{
+  width: 4%;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  font-size: 20px;
+  position: relative;
+}
+.order-status-change i{
+width: 100%;
+text-align: center;
+}
+.order{
+  padding: 20px 0;
+  border-bottom: 1px solid #9e9191;
+}
+.order-status-list{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+  background-color: white;
+  top: 60%;
+  left: 0;
+  opacity: 0;
+  visibility: hidden
+}
+.order-status-list.show{
+opacity: 1;
+visibility: visible;  
+}
+/* .order-customer{
+  display: flex;
+  gap: 20px;
+} */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+.order >div:nth-of-type(1){
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-direction: column;
+  gap: 20px;
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Inter', sans-serif;
+}
+.order-customer,
+.order-address,
+.order-mail{
+  display: flex;
+  align-items: center;
+}
+.order-price,
+.order-status,
+.order-date{
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+.order{
+  display: flex;
+}
+.order >div:nth-of-type(1) i{
+font-size: 16px;
+height: 25px;
+width: 25px;
+background-color:#ebeef0;
+color: #ff8c46;
+border-radius:50%;
+position: relative;
+}
+.order >div:nth-of-type(1) i::before{
+  position: absolute;
+transform: translate(-50%,-50%);
+  top:50%;
+  left: 50%;
+}
