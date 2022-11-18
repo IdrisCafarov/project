@@ -18605,3 +18605,29 @@ transform: translate(-50%,-50%);
   top:50%;
   left: 50%;
 }
+.ps-product__actions{
+  display: flex;
+  align-items: center;
+}
+.list-dashboard,
+.sidebar{
+  height: 100%;
+  padding: 0!important;
+  
+}
+.list-dashboard{
+  background-color: #242424;
+}
+.ps-block--user-account{
+  position: relative;
+}
+.ps-block--user-account span i{
+  font-size: 10px;
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background-color: #ff3300;
+  color: white;
+  padding: 2px;
+  border-radius: 50%;
+}
