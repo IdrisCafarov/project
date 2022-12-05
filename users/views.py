@@ -140,7 +140,6 @@ def add_product(request,id):
 
     if request.method == 'POST':
         images = request.FILES.getlist("image", None)
-
         form = AddProductForm(request.POST, request.FILES or None)
         if form.is_valid() and images:
             print("I am in is vaild")

@@ -126,8 +126,8 @@ class Product(models.Model):
     
 
     #wishlist
-    wishlist = models.ManyToManyField(User,related_name="wishlist",blank=True)
-    basket = models.ManyToManyField(User,related_name="basket",blank=True)
+    wishlist = models.ManyToManyField(User,related_name="wishlist",blank=True,null=True)
+    basket = models.ManyToManyField(User,related_name="basket",blank=True,null=True)
 
     
     @property

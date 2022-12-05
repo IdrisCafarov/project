@@ -52,12 +52,12 @@ widget_tweaks %} {% block body %}
     </div>
     </div>
     <div class="free_div2">
-      <div class="free_error">
+      {% comment %} <div class="free_error">
         <p>
           <b>Error!</b> Your account is not enabled for selling, please contact
           the admin
         </p>
-      </div>
+      </div> {% endcomment %}
       <a href="{% url 'user:add_product' request.user.id %}">
         <button class="button_add">Product elave et</button>
       </a>
@@ -105,7 +105,7 @@ widget_tweaks %} {% block body %}
                         <li>
                           <a
                             id="asas"
-                            href="#"
+                            href="{% url 'product:delete_product' product.id %}"
                             data-toggle="tooltip"
                             data-placement="top"
                             title="Delete"

@@ -228,7 +228,7 @@ class AddProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        exclude = ('seller','sold','draft','slug')
+        exclude = ('seller','sold','draft','slug','basket','wishlist','tempamount')
         fields = ('__all__')
 
 
